@@ -7,6 +7,35 @@ public class Contacto {
 	private String telefono;
 	private String correo;
 
+	public Contacto(String nombre, String telefono, String correo) {
+		if (nombre != null && nombre != "") {
+			setNombre(nombre);
+		} else {
+			throw new IllegalArgumentException("El nombre de un contacto no puede ser nulo o vacío.");
+		}
+
+		if (telefono != null && telefono != "") {
+			if (telefono.matches(ER_TELEFONO)) {
+				setTelefono(telefono);
+			} else {
+				throw new IllegalArgumentException("El teléfono no tiene un formato válido.");
+			}
+		} else {
+			throw new IllegalArgumentException("El teléfono de un contacto no puede ser nulo o vacío.");
+		}
+
+		if (correo != null && correo != "") {
+			if (correo.matches(ER_CORREO)) {
+				setCorreo(correo);
+			} else {
+				throw new IllegalArgumentException("El correo no tiene un formato válido.");
+			}
+		} else {
+			throw new IllegalArgumentException("El correo de un contacto no puede ser nulo o vacío.");
+		}
+
+	}
+
 	public String getNombre() {
 		return nombre;
 	}
@@ -30,7 +59,7 @@ public class Contacto {
 			} else {
 				throw new IllegalArgumentException("El teléfono no tiene un formato válido.");
 			}
-		}else {
+		} else {
 			throw new IllegalArgumentException("El teléfono de un contacto no puede ser nulo o vacío.");
 		}
 	}
@@ -46,7 +75,7 @@ public class Contacto {
 			} else {
 				throw new IllegalArgumentException("El correo no tiene un formato válido.");
 			}
-		}else {
+		} else {
 			throw new IllegalArgumentException("El correo de un contacto no puede ser nulo o vacío.");
 		}
 	}
