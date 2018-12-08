@@ -1,8 +1,8 @@
 package org.iesalandalus.programacion.agenda;
 
 public class Contacto {
-	private static final String ER_TELEFONO = "/^[9|6|7][0-9]{8}$/";
-	private static final String ER_CORREO = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+	private static final String ER_TELEFONO = "[6|7|9][0-9]{8}$";
+	private static final String ER_CORREO = "([\\w\\.\\-_]+)?\\w+@[\\w-_]+(\\.\\w+){1,}";
 	private String nombre;
 	private String telefono;
 	private String correo;
@@ -78,6 +78,67 @@ public class Contacto {
 		} else {
 			throw new IllegalArgumentException("El correo de un contacto no puede ser nulo o vacío.");
 		}
+	}
+
+	@Override
+	public String toString() {
+		return getIniciales() + " [" + telefono + ", " + correo + "]";
+	}
+
+	private String getIniciales() {
+		String nombre = this.nombre;
+		String iniciales = "";
+		int indice = 0;
+		if (nombre.charAt(indice) != ' ') {
+			iniciales = iniciales + nombre.charAt(indice);
+		}
+		indice = nombre.indexOf(" ");
+		while (indice != -1) {
+			if (nombre.charAt(indice + 1) != ' ') {
+				iniciales = iniciales + nombre.charAt(indice + 1);
+			}
+			indice = nombre.indexOf(" ", indice + 1);
+
+		}
+
+		return iniciales.toUpperCase();
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((correo == null) ? 0 : correo.hashCode());
+		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
+		result = prime * result + ((telefono == null) ? 0 : telefono.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Contacto other = (Contacto) obj;
+		if (correo == null) {
+			if (other.correo != null)
+				return false;
+		} else if (!correo.equals(other.correo))
+			return false;
+		if (nombre == null) {
+			if (other.nombre != null)
+				return false;
+		} else if (!nombre.equals(other.nombre))
+			return false;
+		if (telefono == null) {
+			if (other.telefono != null)
+				return false;
+		} else if (!telefono.equals(other.telefono))
+			return false;
+		return true;
 	}
 
 }
